@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Royal Wedding Invitation | Samiullah & Rehmatullah Baloch</title>
+  <meta property="og:title" content="Royal Wedding Invitation | Samiullah & Rehmatullah Baloch">
+  <meta property="og:description" content="Mr. & Mrs. Jahangir Khan Baloch cordially invite you to celebrate the wedding ceremony of their beloved sons, Samiullah Khan Baloch & Rehmatullah Khan Baloch.">
+  <meta name="theme-color" content="#0a0604">
+
+  <!-- Luxury Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,700&family=Cinzel:wght@500;600;700;800;900&family=Great+Vibes&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- GSAP & Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Audio Engine -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" type="audio/mp3">
+  </audio>
+  <canvas id="sparkle-canvas"></canvas>
+
+  <button id="music-btn" class="music-fab" aria-label="Toggle Music">
+    <div class="wave-bars"><span></span><span></span><span></span></div>
+    <i class="fa-solid fa-music"></i>
+  </button>
+
+  <!-- ============================================================ -->
+  <!-- 3D ROYAL EMBOSSED ENVELOPE OPENING STAGE                     -->
+  <!-- ============================================================ -->
+  <div id="envelope-stage" class="envelope-stage">
+    
+    <!-- Radiant Volumetric Light Burst -->
+    <div class="light-burst-rays" id="light-rays"></div>
+    <div class="volumetric-glow" id="volumetric-glow"></div>
+
+    <div class="envelope-wrapper" id="envelope">
+      
+      <!-- Inner Radiant Glow Leaking Through Seams -->
+      <div class="envelope-seam-glow"></div>
+
+      <!-- Inside Liner with Royal Gold Crest Peek -->
+      <div class="envelope-inner">
+        <div class="inner-pattern"></div>
+        <div class="inner-emblem">
+          <svg viewBox="0 0 100 100" class="mini-crest">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(212,175,55,0.7)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(212,175,55,0.9)" stroke-width="1.2"/>
+            <text x="50" y="55" font-family="'Cinzel', serif" font-size="20" fill="#d4af37" text-anchor="middle" font-weight="700">S & R</text>
+            <text x="50" y="68" font-family="'Outfit', sans-serif" font-size="9" fill="#c59f4e" text-anchor="middle" font-weight="600" letter-spacing="2">2026</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 4 Opulent Embossed Flaps with Floral Lace & Gold Relief -->
+      <div class="flap flap-top" id="flap-top">
+        <svg class="flap-svg" viewBox="0 0 340 200" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="flapGradTop" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#fffdf7"/>
+              <stop offset="55%" stop-color="#f8eee0"/>
+              <stop offset="100%" stop-color="#ebd8c0"/>
+            </linearGradient>
+            <linearGradient id="goldStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffe885"/>
+              <stop offset="45%" stop-color="#d4af37"/>
+              <stop offset="100%" stop-color="#7a5412"/>
+            </linearGradient>
+            <filter id="embossTop" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#ffffff" flood-opacity="0.9"/>
+              <feDropShadow dx="0" dy="-1.5" stdDeviation="1.2" flood-color="#805a2b" flood-opacity="0.25"/>
+            </filter>
+          </defs>
+          <path d="M0,0 L340,0 L170,200 Z" fill="url(#flapGradTop)"/>
+          <!-- Gold Bevel Outer Border -->
+          <path d="M0,0 L170,200 L340,0" fill="none" stroke="url(#goldStroke)" stroke-width="3"/>
+          <path d="M12,5 L170,188 L328,5" fill="none" stroke="rgba(212,175,55,0.45)" stroke-width="1.2" stroke-dasharray="3 3"/>
+          <!-- Ornate Embossed Floral Garland -->
+          <g filter="url(#embossTop)" opacity="0.6">
+            <path d="M170,165 Q205,120 250,90 Q290,65 325,15" fill="none" stroke="#9e7332" stroke-width="2"/>
+            <path d="M170,165 Q135,120 90,90 Q50,65 15,15" fill="none" stroke="#9e7332" stroke-width="2"/>
+            <!-- Flower Rosettes -->
+            <circle cx="170" cy="115" r="16" fill="none" stroke="#9e7332" stroke-width="1.5"/>
+            <circle cx="170" cy="115" r="9" fill="none" stroke="#9e7332" stroke-width="1.2" stroke-dasharray="2 2"/>
+            <circle cx="170" cy="115" r="4" fill="#c59f4e"/>
+            <path d="M160,90 Q170,75 180,90 Q170,105 160,90 Z" fill="none" stroke="#9e7332" stroke-width="1.5"/>
+            <circle cx="215" cy="105" r="7" fill="none" stroke="#9e7332" stroke-width="1.2"/>
+            <circle cx="125" cy="105" r="7" fill="none" stroke="#9e7332" stroke-width="1.2"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="flap flap-bottom" id="flap-bottom">
+        <svg class="flap-svg" viewBox="0 0 340 250" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="flapGradBot" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#fffdf7"/>
+              <stop offset="65%" stop-color="#f5e9d6"/>
+              <stop offset="100%" stop-color="#e2cdb0"/>
+            </linearGradient>
+            <filter id="embossBot" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#ffffff" flood-opacity="0.95"/>
+              <feDropShadow dx="0" dy="-1.5" stdDeviation="1.2" flood-color="#805a2b" flood-opacity="0.3"/>
+            </filter>
+          </defs>
+          <path d="M0,250 L340,250 L170,65 Z" fill="url(#flapGradBot)"/>
+          <path d="M0,250 L170,65 L340,250" fill="none" stroke="url(#goldStroke)" stroke-width="3"/>
+          <path d="M12,245 L170,78 L328,245" fill="none" stroke="rgba(212,175,55,0.45)" stroke-width="1.2" stroke-dasharray="3 3"/>
+          <!-- Rich Embossed Floral Bouquet Centerpiece (Matching Reference Image) -->
+          <g filter="url(#embossBot)" opacity="0.65">
+            <path d="M170,90 Q215,145 280,195 Q310,220 330,240" fill="none" stroke="#9e7332" stroke-width="2"/>
+            <path d="M170,90 Q125,145 60,195 Q30,220 10,240" fill="none" stroke="#9e7332" stroke-width="2"/>
+            <!-- Central Rosette Medallion -->
+            <circle cx="170" cy="165" r="26" fill="none" stroke="#9e7332" stroke-width="1.8"/>
+            <circle cx="170" cy="165" r="18" fill="none" stroke="#9e7332" stroke-width="1.2" stroke-dasharray="3 2"/>
+            <circle cx="170" cy="165" r="8" fill="none" stroke="#9e7332" stroke-width="1.2"/>
+            <circle cx="170" cy="165" r="3" fill="#c59f4e"/>
+            <!-- Petals radiating -->
+            <path d="M170,135 Q176,145 170,155 Q164,145 170,135 Z" fill="#b0853b"/>
+            <path d="M170,195 Q176,185 170,175 Q164,185 170,195 Z" fill="#b0853b"/>
+            <path d="M140,165 Q150,159 160,165 Q150,171 140,165 Z" fill="#b0853b"/>
+            <path d="M200,165 Q190,159 180,165 Q190,171 200,165 Z" fill="#b0853b"/>
+            <!-- Leaves & Filigree Vines -->
+            <path d="M145,135 Q130,115 110,135 Q130,145 145,135 Z" fill="none" stroke="#9e7332" stroke-width="1.2"/>
+            <path d="M195,135 Q210,115 230,135 Q210,145 195,135 Z" fill="none" stroke="#9e7332" stroke-width="1.2"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="flap flap-left" id="flap-left">
+        <svg class="flap-svg" viewBox="0 0 180 440" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="flapGradLeft" x1="0%" y1="50%" x2="100%" y2="50%">
+              <stop offset="0%" stop-color="#fffdf7"/>
+              <stop offset="100%" stop-color="#ebdac3"/>
+            </linearGradient>
+            <filter id="embossLeft">
+              <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#ffffff" flood-opacity="0.9"/>
+              <feDropShadow dx="-1" dy="-1" stdDeviation="1" flood-color="#805a2b" flood-opacity="0.25"/>
+            </filter>
+          </defs>
+          <path d="M0,0 L180,220 L0,440 Z" fill="url(#flapGradLeft)"/>
+          <path d="M0,0 L180,220 L0,440" fill="none" stroke="url(#goldStroke)" stroke-width="2.5"/>
+          <g filter="url(#embossLeft)" opacity="0.6">
+            <path d="M18,50 Q85,135 160,220 Q85,305 18,390" fill="none" stroke="#9e7332" stroke-width="1.8"/>
+            <circle cx="95" cy="220" r="14" fill="none" stroke="#9e7332" stroke-width="1.4"/>
+            <circle cx="95" cy="220" r="6" fill="#c59f4e"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="flap flap-right" id="flap-right">
+        <svg class="flap-svg" viewBox="0 0 180 440" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="flapGradRight" x1="100%" y1="50%" x2="0%" y2="50%">
+              <stop offset="0%" stop-color="#fffdf7"/>
+              <stop offset="100%" stop-color="#ebdac3"/>
+            </linearGradient>
+            <filter id="embossRight">
+              <feDropShadow dx="-1" dy="1" stdDeviation="1" flood-color="#ffffff" flood-opacity="0.9"/>
+              <feDropShadow dx="1" dy="-1" stdDeviation="1" flood-color="#805a2b" flood-opacity="0.25"/>
+            </filter>
+          </defs>
+          <path d="M180,0 L0,220 L180,440 Z" fill="url(#flapGradRight)"/>
+          <path d="M180,0 L0,220 L180,440" fill="none" stroke="url(#goldStroke)" stroke-width="2.5"/>
+          <g filter="url(#embossRight)" opacity="0.6">
+            <path d="M162,50 Q95,135 20,220 Q95,305 162,390" fill="none" stroke="#9e7332" stroke-width="1.8"/>
+            <circle cx="85" cy="220" r="14" fill="none" stroke="#9e7332" stroke-width="1.4"/>
+            <circle cx="85" cy="220" r="6" fill="#c59f4e"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Center 3D Royal Gold Wax Seal with Arabic Bismillah & Warm Radiance -->
+      <div class="seal-container" id="wax-seal-btn">
+        <div class="seal-radiance" id="seal-radiance"></div>
+        <div class="gold-wax-seal">
+          <svg viewBox="0 0 120 120" class="seal-svg-rings">
+            <!-- Scalloped wax edge petals -->
+            <circle cx="60" cy="60" r="56" fill="none" stroke="rgba(255,245,190,0.9)" stroke-width="2" stroke-dasharray="4 2"/>
+            <circle cx="60" cy="60" r="49" fill="none" stroke="rgba(212,175,55,0.95)" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(110,70,15,0.5)" stroke-width="1"/>
+          </svg>
+          <div class="seal-content">
+            <div class="seal-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="seal-monogram">S & R</div>
+            <div class="seal-year">2026</div>
+          </div>
+        </div>
+        <div class="seal-prompt">
+          <span class="prompt-icon">✦</span>
+          <span class="prompt-main">TAP TO OPEN</span>
+          <small class="prompt-sub">ROYAL INVITATION</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ROYAL WEDDING INVITATION SUITE (5 BESPOKE ARTWORK CARDS)     -->
+  <!-- ============================================================ -->
+  <div id="invitation-suite" class="invitation-suite">
+
+    <div class="invitation-scroll">
+
+      <!-- ================= CARD 1: ROYAL PALACE HERO COVER ================= -->
+      <section class="royal-card card-hero">
+        <div class="card-hero-overlay"></div>
+        
+        <div class="card-hero-content">
+          <!-- Bismillah in illuminated golden sky below chandelier -->
+          <div class="ar-bismillah reveal-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+          
+          <div class="gold-crest-divider reveal-text">
+            <span class="g-line"></span>
+            <i class="fa-solid fa-crown g-icon"></i>
+            <span class="g-line"></span>
+          </div>
+
+          <p class="invitation-lead reveal-text">IN THE NAME OF ALLAH, THE MOST GRACIOUS, THE MOST MERCIFUL</p>
+          
+          <div class="reveal-text reveal-delay-1">
+            <p class="hosts-caption">Together with their families</p>
+            <h2 class="hosts-name">Mr. & Mrs. Jahangir Khan Baloch</h2>
+            <p class="hosts-request">cordially invite you to celebrate the wedding ceremony of their beloved sons</p>
+          </div>
+
+          <!-- Grooms Calligraphy: Stylish, Elegant & 100% Readable (NO BOX) -->
+          <div class="grooms-spotlight-pure reveal-text reveal-delay-2">
+            <div class="groom-row">
+              <span class="groom-tag">Groom</span>
+              <h1 class="groom-name"><span class="name-first">Samiullah Khan</span><br><span class="name-last">Baloch</span></h1>
+            </div>
+            
+            <div class="ampersand-divider">
+              <span class="amp-line"></span>
+              <span class="amp-char">&</span>
+              <span class="amp-line"></span>
+            </div>
+
+            <div class="groom-row">
+              <span class="groom-tag">Groom</span>
+              <h1 class="groom-name"><span class="name-first">Rehmatullah Khan</span><br><span class="name-last">Baloch</span></h1>
+            </div>
+          </div>
+
+          <div class="celebration-dates-pill reveal-text reveal-delay-3">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span>11TH — 13TH DECEMBER 2026</span>
+          </div>
+
+          <!-- Sleek Frosted Countdown Bar -->
+          <div class="countdown-bar reveal-text reveal-delay-3">
+            <div class="cd-item"><span class="cd-num" id="cd-days">--</span><span class="cd-unit">DAYS</span></div>
+            <span class="cd-colon">:</span>
+            <div class="cd-item"><span class="cd-num" id="cd-hours">--</span><span class="cd-unit">HOURS</span></div>
+            <span class="cd-colon">:</span>
+            <div class="cd-item"><span class="cd-num" id="cd-mins">--</span><span class="cd-unit">MINS</span></div>
+            <span class="cd-colon">:</span>
+            <div class="cd-item"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit">SECS</span></div>
+          </div>
+
+          <!-- Scroll Indicator -->
+          <div class="scroll-cue reveal-text reveal-delay-4">
+            <span>Scroll to explore ceremonies</span>
+            <i class="fa-solid fa-chevron-down fa-bounce"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- Royal Flourish Connector -->
+      <div class="card-connector">
+        <span class="conn-line"></span>
+        <i class="fa-solid fa-crown conn-icon"></i>
+        <span class="conn-line"></span>
+      </div>
+
+      <!-- ================= CARD 2: MEHNDI CEREMONY (EMERALD & GOLD BESPOKE ARTWORK) ================= -->
+      <section class="royal-card card-mehndi">
+        <div class="card-mehndi-content">
+          <div class="reveal-text">
+            <div class="ceremony-badge">CEREMONY I</div>
+            <h2 class="ceremony-title">Mehndi Ceremony</h2>
+            <p class="ceremony-desc">An evening of celebration, traditional music, and joyful henna</p>
+          </div>
+
+          <div class="gold-crest-divider reveal-text">
+            <span class="g-line"></span>
+            <span class="g-diamond">◆</span>
+            <span class="g-line"></span>
+          </div>
+
+          <!-- Date Showcase: Bodoni 11 on glowing plain arch -->
+          <div class="date-arch-showcase reveal-text reveal-delay-1">
+            <span class="day-label">FRIDAY</span>
+            <div class="date-hero-numbers">
+              <span class="hero-num">11</span>
+              <div class="hero-meta">
+                <span class="hero-month">DECEMBER</span>
+                <span class="hero-year">2026</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ornate-hairline-sep"></div>
+
+          <!-- Timings: 2 Elegant Balanced Columns in plain center -->
+          <div class="timings-pure-row reveal-text reveal-delay-2">
+            <div class="timing-pure-col">
+              <i class="fa-regular fa-clock timing-pure-icon"></i>
+              <span class="timing-pure-lbl">CEREMONY</span>
+              <span class="timing-pure-time">7:00 PM</span>
+            </div>
+            <div class="timing-pure-divider"></div>
+            <div class="timing-pure-col">
+              <i class="fa-solid fa-utensils timing-pure-icon"></i>
+              <span class="timing-pure-lbl">ROYAL DINNER</span>
+              <span class="timing-pure-time">8:00 PM</span>
+            </div>
+          </div>
+
+          <div class="ornate-hairline-sep"></div>
+
+          <!-- Venue Showcase in plain center -->
+          <div class="venue-arch-showcase reveal-text reveal-delay-3">
+            <span class="v-tag"><i class="fa-solid fa-location-dot"></i> VENUE</span>
+            <h3 class="v-name">Ancestral Residence</h3>
+            <p class="v-addr">Mauza Shams Kay</p>
+            <span class="v-note">Celebrations will take place at the ancestral home</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Royal Flourish Connector -->
+      <div class="card-connector">
+        <span class="conn-line"></span>
+        <i class="fa-solid fa-crown conn-icon"></i>
+        <span class="conn-line"></span>
+      </div>
+
+      <!-- ================= CARD 3: THE BARAT (CRIMSON VELVET & GOLD BESPOKE ARTWORK) ================= -->
+      <section class="royal-card card-barat">
+        <div class="card-barat-content">
+          <div class="reveal-text">
+            <div class="ceremony-badge">CEREMONY II</div>
+            <h2 class="ceremony-title">The Barat</h2>
+            <p class="ceremony-desc">The auspicious wedding procession and nuptial union</p>
+          </div>
+
+          <div class="gold-crest-divider reveal-text">
+            <span class="g-line"></span>
+            <span class="g-diamond">◆</span>
+            <span class="g-line"></span>
+          </div>
+
+          <!-- Date Showcase: Bodoni 12 on plain scalloped arch -->
+          <div class="date-arch-showcase reveal-text reveal-delay-1">
+            <span class="day-label">SATURDAY</span>
+            <div class="date-hero-numbers">
+              <span class="hero-num">12</span>
+              <div class="hero-meta">
+                <span class="hero-month">DECEMBER</span>
+                <span class="hero-year">2026</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ornate-hairline-sep"></div>
+
+          <!-- Timings: 2 Elegant Balanced Columns in plain center -->
+          <div class="timings-pure-row reveal-text reveal-delay-2">
+            <div class="timing-pure-col">
+              <i class="fa-solid fa-crown timing-pure-icon"></i>
+              <span class="timing-pure-lbl">SEHRA BANDI</span>
+              <span class="timing-pure-time">1:00 PM</span>
+            </div>
+            <div class="timing-pure-divider"></div>
+            <div class="timing-pure-col">
+              <i class="fa-solid fa-horse-head timing-pure-icon"></i>
+              <span class="timing-pure-lbl">BARAT DEPARTURE</span>
+              <span class="timing-pure-time">2:00 PM</span>
+            </div>
+          </div>
+
+          <div class="ornate-hairline-sep"></div>
+
+          <!-- Venue Showcase in plain center -->
+          <div class="venue-arch-showcase reveal-text reveal-delay-3">
+            <span class="v-tag"><i class="fa-solid fa-location-dot"></i> VENUE</span>
+            <h3 class="v-name">Milan Marriage Hall</h3>
+            <p class="v-addr">Hujra Shah Muqeem</p>
+            <span class="v-note">Grand Hall, Milan Wedding Complex, Hujra Shah Muqeem</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Royal Flourish Connector -->
+      <div class="card-connector">
+        <span class="conn-line"></span>
+        <i class="fa-solid fa-crown conn-icon"></i>
+        <span class="conn-line"></span>
+      </div>
+
+      <!-- ================= CARD 4: WALIMA RECEPTION (CHAMPAGNE GOLD & CHANDELIER) ================= -->
+      <section class="royal-card card-walima">
+        <div class="card-walima-content">
+          <div class="reveal-text">
+            <div class="ceremony-badge">CEREMONY III</div>
+            <h2 class="ceremony-title">Walima Reception</h2>
+            <p class="ceremony-desc">The grand wedding banquet honoring the newly wedded couples</p>
+          </div>
+
+          <div class="gold-crest-divider reveal-text">
+            <span class="g-line"></span>
+            <span class="g-diamond">◆</span>
+            <span class="g-line"></span>
+          </div>
+
+          <!-- Date Showcase: Bodoni 13 on champagne colonnade plain center -->
+          <div class="date-arch-showcase reveal-text reveal-delay-1">
+            <span class="day-label">SUNDAY</span>
+            <div class="date-hero-numbers">
+              <span class="hero-num">13</span>
+              <div class="hero-meta">
+                <span class="hero-month">DECEMBER</span>
+                <span class="hero-year">2026</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ornate-hairline-sep"></div>
+
+          <!-- Timings: 2 Elegant Balanced Columns in plain center -->
+          <div class="timings-pure-row reveal-text reveal-delay-2">
+            <div class="timing-pure-col">
+              <i class="fa-solid fa-door-open timing-pure-icon"></i>
+              <span class="timing-pure-lbl">GUEST RECEPTION</span>
+              <span class="timing-pure-time">2:00 PM</span>
+            </div>
+            <div class="timing-pure-divider"></div>
+            <div class="timing-pure-col">
+              <i class="fa-solid fa-champagne-glasses timing-pure-icon"></i>
+              <span class="timing-pure-lbl">ROYAL BANQUET</span>
+              <span class="timing-pure-time">3:00 PM</span>
+            </div>
+          </div>
+
+          <div class="ornate-hairline-sep"></div>
+
+          <!-- Venue Showcase in plain center -->
+          <div class="venue-arch-showcase reveal-text reveal-delay-3">
+            <span class="v-tag"><i class="fa-solid fa-location-dot"></i> VENUE</span>
+            <h3 class="v-name">Al-Rehman Marquee</h3>
+            <p class="v-addr">Opposite New Sabzi Mandi, Hujra Shah Muqeem</p>
+            <span class="v-note">Main Grand Marquee, Hujra Shah Muqeem</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Royal Flourish Connector -->
+      <div class="card-connector">
+        <span class="conn-line"></span>
+        <i class="fa-solid fa-crown conn-icon"></i>
+        <span class="conn-line"></span>
+      </div>
+
+      <!-- ================= CARD 5: BLESSINGS & COMPLIMENTS (HANDMADE GOLD DECKLED CARD) ================= -->
+      <section class="royal-card card-blessings">
+        <div class="card-blessings-content">
+          <!-- Quranic Inscription directly on deckled parchment -->
+          <div class="quran-arch-showcase reveal-text">
+            <div class="quran-ar">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا<br>لِّتَسْکُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</div>
+            <span class="quran-ref">SURAH AR-RUM (30:21)</span>
+            <p class="quran-translation">"And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy."</p>
+          </div>
+
+          <div class="gold-crest-divider reveal-text">
+            <span class="g-line"></span>
+            <i class="fa-solid fa-hands-praying g-icon"></i>
+            <span class="g-line"></span>
+          </div>
+
+          <p class="blessings-note reveal-text reveal-delay-1">Your gracious presence, warm wishes, and prayers will be a source of immense joy and an esteemed honor for our family.</p>
+
+          <!-- Family Signatures -->
+          <div class="family-signature-box reveal-text reveal-delay-2">
+            <span class="sig-tag">LOOKING FORWARD TO WELCOMING YOU</span>
+            <h3 class="sig-hosts">Mr. & Mrs. Jahangir Khan Baloch</h3>
+            <p class="sig-clan">& The Entire Baloch Family</p>
+          </div>
+
+          <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="return-top-btn reveal-text reveal-delay-3">
+            <i class="fa-solid fa-arrow-up"></i>
+            <span>RETURN TO TOP</span>
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

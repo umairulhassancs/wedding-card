@@ -1,0 +1,1161 @@
+/* =================================================================
+   ROYAL LUXURY DIGITAL WEDDING INVITATION – ENGLISH SUITE
+   Opulent 3D Envelope · High-Contrast Typography · Perfect Arch Fit
+   ================================================================= */
+
+:root {
+  --gold: #c59f4e;
+  --gold-rich: #d4af37;
+  --gold-deep: #7a5412;
+  --gold-light: #fef1cf;
+  --gold-glow: rgba(212, 175, 55, 0.45);
+  
+  --bg-dark: #0a0604;
+  --bg-deep: #140c06;
+  
+  --paper-cream: #faf5eb;
+  --paper-ivory: #fcf9f2;
+  --emboss-stroke: rgba(140, 110, 60, 0.45);
+  
+  --ink-primary: #120a04;
+  --ink-secondary: #2c1a0c;
+  --ink-muted: #5e462d;
+  --royal-maroon: #6e1320;
+  --royal-emerald: #0e3b22;
+  
+  /* Grooms font: Aristocratic, stylish, yet 100% effortless to read */
+  --font-grooms: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-num: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-arabic: 'Amiri', serif;
+}
+
+/* Reset & Basics */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-dark);
+}
+
+body {
+  background-color: var(--bg-dark);
+  font-family: var(--font-sans);
+  color: var(--ink-primary);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  line-height: 1.6;
+}
+
+/* Golden Sparkle Floating Canvas */
+#sparkle-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ============================================================ */
+/* FLOATING AUDIO CONTROLLER (FAB)                              */
+/* ============================================================ */
+.music-fab {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 500;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(253, 250, 243, 0.95);
+  border: 1.5px solid var(--gold-rich);
+  color: var(--gold-deep);
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease;
+}
+.music-fab:hover {
+  transform: scale(1.08);
+}
+.wave-bars {
+  display: none;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+}
+.wave-bars span {
+  width: 3px;
+  background: var(--gold-rich);
+  border-radius: 2px;
+  animation: waveMotion 1s ease-in-out infinite alternate;
+}
+.wave-bars span:nth-child(2) { animation-delay: 0.2s; }
+.wave-bars span:nth-child(3) { animation-delay: 0.4s; }
+.music-fab.playing .wave-bars { display: flex; }
+.music-fab.playing .fa-music { display: none; }
+
+@keyframes waveMotion {
+  0% { height: 4px; }
+  100% { height: 16px; }
+}
+
+/* ============================================================ */
+/* 3D EMBOSSED ROYAL ENVELOPE OPENING STAGE                     */
+/* ============================================================ */
+.envelope-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  background: radial-gradient(ellipse at 50% 45%, #241407 0%, #0d0703 70%, #030101 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.8s ease;
+}
+
+/* Light rays placed BEHIND the envelope so the flap unfolding is 100% visible */
+.light-burst-rays {
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 215, 90, 0.45) 20deg,
+    transparent 45deg,
+    rgba(255, 235, 140, 0.55) 80deg,
+    transparent 110deg,
+    rgba(255, 215, 90, 0.45) 140deg,
+    transparent 170deg,
+    rgba(255, 235, 140, 0.55) 210deg,
+    transparent 240deg,
+    rgba(255, 215, 90, 0.45) 280deg,
+    transparent 320deg,
+    rgba(255, 215, 90, 0.45) 350deg,
+    transparent 360deg
+  );
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.volumetric-glow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 110, 0.6) 0%, rgba(212, 175, 55, 0.3) 45%, transparent 75%);
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.envelope-wrapper {
+  position: relative;
+  width: min(92vw, 380px);
+  height: min(86vh, 660px);
+  perspective: 1600px;
+  box-shadow: 0 35px 95px rgba(0, 0, 0, 0.95), 0 0 0 1.5px rgba(212, 175, 55, 0.6);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fdfaf3 0%, #ede2ce 50%, #d8c29d 100%);
+}
+
+.envelope-seam-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 215, 90, 0.9) 0%, rgba(255, 175, 50, 0.5) 45%, transparent 72%);
+  filter: blur(10px);
+  z-index: 15;
+  pointer-events: none;
+  animation: seamPulse 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes seamPulse {
+  0% { opacity: 0.6; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+.envelope-inner {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, #fffbf2 0%, #f0dec5 70%, #d8c29d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+}
+
+.mini-crest {
+  width: 70px;
+  height: 70px;
+  opacity: 0.85;
+}
+
+/* Flaps */
+.flap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.flap-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.flap-top {
+  z-index: 40;
+  height: 48%;
+  transform-origin: top center;
+  filter: drop-shadow(0 8px 18px rgba(40, 20, 5, 0.45));
+}
+.flap-bottom {
+  z-index: 30;
+  top: auto;
+  bottom: 0;
+  height: 56%;
+  transform-origin: bottom center;
+  filter: drop-shadow(0 -6px 16px rgba(40, 20, 5, 0.4));
+}
+.flap-left {
+  z-index: 20;
+  width: 52%;
+  transform-origin: left center;
+  filter: drop-shadow(4px 0 12px rgba(40, 20, 5, 0.35));
+}
+.flap-right {
+  z-index: 20;
+  left: auto;
+  right: 0;
+  width: 52%;
+  transform-origin: right center;
+  filter: drop-shadow(-4px 0 12px rgba(40, 20, 5, 0.35));
+}
+
+/* 3D Realistic Gold Wax Seal */
+.seal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.seal-radiance {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.55) 0%, transparent 70%);
+  animation: sealPulse 2.4s infinite alternate;
+  pointer-events: none;
+}
+@keyframes sealPulse {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  100% { transform: scale(1.2); opacity: 0.95; }
+}
+
+.gold-wax-seal {
+  width: 114px;
+  height: 114px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff2b8 0%, #f3c734 25%, #c59b27 60%, #6e480d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8),
+              0 0 25px rgba(255, 215, 80, 0.45),
+              inset 0 3px 6px rgba(255, 255, 255, 0.95),
+              inset 0 -5px 10px rgba(70, 45, 10, 0.8);
+  border: 2.5px solid rgba(255, 245, 195, 0.9);
+  position: relative;
+  transition: transform 0.25s ease;
+}
+.seal-container:hover .gold-wax-seal {
+  transform: scale(1.06);
+}
+.seal-svg-rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.seal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #fffaf0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  padding: 0 6px;
+}
+.seal-bismillah {
+  font-family: var(--font-arabic);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  margin-bottom: 2px;
+}
+.seal-monogram {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin-top: 1px;
+}
+.seal-year {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff1c2;
+}
+
+.seal-prompt {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 20px;
+  border-radius: 20px;
+  background: rgba(18, 10, 4, 0.88);
+  border: 1.2px solid rgba(212, 175, 55, 0.8);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), 0 0 12px rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(6px);
+  animation: floatPrompt 2.2s ease-in-out infinite;
+}
+.prompt-icon {
+  font-size: 12px;
+  color: #ffd700;
+  margin-bottom: 2px;
+}
+.prompt-main {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: #ffe69c;
+}
+.prompt-sub {
+  font-size: 8.5px;
+  letter-spacing: 2.5px;
+  color: #dfcaa7;
+  font-weight: 600;
+}
+@keyframes floatPrompt {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ============================================================ */
+/* SEAMLESS CONTINUOUS ROYAL INVITATION SCROLL CONTAINER        */
+/* ============================================================ */
+.invitation-suite {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: radial-gradient(ellipse at 50% 15%, #22140a 0%, #0d0805 60%, #040201 100%);
+  display: flex;
+  justify-content: center;
+  padding: 24px 12px 60px;
+}
+
+.invitation-scroll {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Base Royal Card Specs */
+.royal-card {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.35);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #faf5eb;
+}
+
+/* Royal Flourish Connector Between Cards */
+.card-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 82%;
+  margin: 18px auto;
+  opacity: 0.9;
+}
+.conn-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7), transparent);
+}
+.conn-icon {
+  font-size: 13px;
+  color: var(--gold-rich);
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.7));
+}
+
+/* ============================================================ */
+/* CARD 1: ROYAL PALACE HERO COVER                              */
+/* ============================================================ */
+.card-hero {
+  background-image: url('assets/hero_bg.jpg');
+  background-color: #1a0f07;
+  min-height: 820px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.card-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 64%,
+    rgba(255, 246, 228, 0.7) 0%,
+    rgba(255, 246, 228, 0.3) 60%,
+    rgba(255, 245, 225, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.card-hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 295px;
+  margin: 0 auto;
+  padding: 275px 12px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Bismillah & Dividers */
+.ar-bismillah {
+  font-family: var(--font-arabic);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold-deep);
+  line-height: 1.8;
+  margin-bottom: 2px;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.95);
+}
+
+.gold-crest-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 75%;
+  margin: 6px auto 10px;
+}
+.g-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.g-icon {
+  font-size: 13px;
+  color: var(--gold-rich);
+}
+.g-diamond {
+  font-size: 10px;
+  color: var(--gold-deep);
+}
+
+/* High Contrast Lead & Hosts Info */
+.invitation-lead {
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #120a04;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.95);
+  margin-bottom: 6px;
+}
+
+.hosts-caption {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2b1709;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.95);
+  margin-bottom: 2px;
+}
+.hosts-name {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 900;
+  color: var(--royal-maroon);
+  letter-spacing: 1.5px;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 1);
+}
+.hosts-request {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a0f07;
+  line-height: 1.45;
+  margin-bottom: 10px;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.95);
+}
+
+/* Grooms Spotlight: STYLISH, ARISTOCRATIC & 100% READABLE (NO BOX) */
+.grooms-spotlight-pure {
+  width: 100%;
+  padding: 4px 0;
+  margin-bottom: 12px;
+}
+.groom-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.groom-tag {
+  font-family: var(--font-display);
+  font-size: 9.5px;
+  letter-spacing: 2.5px;
+  color: var(--gold-deep);
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+.groom-name {
+  font-family: var(--font-grooms);
+  font-style: italic;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--royal-maroon);
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.95), 0 0 12px rgba(212, 175, 55, 0.35);
+}
+.name-first {
+  white-space: nowrap;
+  display: inline-block;
+}
+.name-last {
+  display: inline-block;
+}
+
+.ampersand-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 50%;
+  margin: 3px auto;
+}
+.amp-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.amp-char {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-deep);
+}
+
+.celebration-dates-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #5a3810;
+  padding: 5px 18px;
+  border-radius: 20px;
+  background: rgba(255, 248, 230, 0.85);
+  border: 1.2px solid rgba(197, 159, 78, 0.6);
+  margin-bottom: 12px;
+}
+
+/* Sleek Frosted Countdown Bar */
+.countdown-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 14px;
+  background: rgba(255, 248, 235, 0.8);
+  border: 1.2px solid rgba(212, 175, 55, 0.5);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+.cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 44px;
+}
+.cd-num {
+  font-family: var(--font-num);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--royal-maroon);
+  line-height: 1;
+}
+.cd-unit {
+  font-family: var(--font-sans);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-muted);
+  margin-top: 3px;
+}
+.cd-colon {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: -6px;
+}
+
+.scroll-cue {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--ink-muted);
+}
+.scroll-cue i {
+  color: var(--gold-rich);
+  font-size: 12px;
+}
+
+/* ============================================================ */
+/* CARD 2: MEHNDI CEREMONY (EMERALD & GOLD BESPOKE ARTWORK)     */
+/* ============================================================ */
+.card-mehndi {
+  background-image: url('assets/mehndi_bg.jpg');
+  min-height: 720px;
+}
+
+.card-mehndi-content {
+  position: relative;
+  z-index: 10;
+  max-width: 225px;
+  margin: 0 auto;
+  padding: 214px 8px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card-mehndi .ceremony-badge {
+  background: rgba(16, 75, 43, 0.2);
+  border: 1px solid rgba(16, 75, 43, 0.5);
+  color: #0b381d;
+  margin-bottom: 1px;
+}
+.card-mehndi .ceremony-title {
+  color: #0b381d;
+  font-size: 22.5px;
+  margin-bottom: 1px;
+}
+.card-mehndi .ceremony-desc {
+  font-size: 10px;
+  max-width: 195px;
+  margin: 0 auto 2px;
+}
+.card-mehndi .hero-num {
+  color: #0b381d;
+}
+
+/* ============================================================ */
+/* CARD 3: THE BARAT (CRIMSON VELVET & GOLD BESPOKE ARTWORK)   */
+/* ============================================================ */
+.card-barat {
+  background-image: url('assets/barat_bg.jpg');
+  min-height: 760px;
+}
+
+.card-barat-content {
+  position: relative;
+  z-index: 10;
+  max-width: 235px;
+  margin: 0 auto;
+  padding: 318px 10px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card-barat .ceremony-badge {
+  background: rgba(110, 19, 32, 0.18);
+  border: 1px solid rgba(110, 19, 32, 0.5);
+  color: #6e1320;
+}
+.card-barat .ceremony-title {
+  color: #6e1320;
+}
+.card-barat .hero-num {
+  color: #6e1320;
+}
+
+/* ============================================================ */
+/* CARD 4: WALIMA RECEPTION (CHAMPAGNE GOLD & CHANDELIER)       */
+/* ============================================================ */
+.card-walima {
+  background-image: url('assets/walima_bg.jpg');
+  min-height: 720px;
+}
+
+.card-walima-content {
+  position: relative;
+  z-index: 10;
+  max-width: 235px;
+  margin: 0 auto;
+  padding: 215px 10px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card-walima .ceremony-badge {
+  background: rgba(160, 120, 40, 0.2);
+  border: 1px solid rgba(160, 120, 40, 0.5);
+  color: #68430b;
+}
+.card-walima .ceremony-title {
+  color: #5a101b;
+}
+.card-walima .hero-num {
+  color: #5a101b;
+}
+
+/* Shared Ceremony Card Typography (Compact for plain arch fit) */
+.ceremony-badge {
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  padding: 2px 14px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.ceremony-title {
+  font-family: var(--font-serif);
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 2px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+.ceremony-desc {
+  font-size: 11px;
+  color: #1a0f07;
+  font-weight: 700;
+  line-height: 1.35;
+  max-width: 215px;
+  margin: 0 auto 4px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+/* Ornate hairline separator between card elements */
+.ornate-hairline-sep {
+  width: 65%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+  margin: 5px auto;
+}
+
+/* ============================================================ */
+/* DATE ARCH SHOWCASE (BODONI SERIF: 11, 12, 13 DIRECT ON ART)  */
+/* ============================================================ */
+.date-arch-showcase {
+  width: 100%;
+  padding: 2px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.day-label {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--gold-deep);
+  display: block;
+  margin-bottom: 1px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+.date-hero-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+/* HIGH-FASHION BODONI MODA NUMERALS (MATCHING USER IMAGES 1, 2, 3) */
+.hero-num {
+  font-family: var(--font-num);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.hero-month {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--gold-deep);
+  line-height: 1.15;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+.hero-year {
+  font-family: var(--font-num);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink-secondary);
+  line-height: 1.15;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+/* Timings: Pure Balanced 2-Column Spread (NO WHITE BOX) */
+.timings-pure-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2px 0;
+}
+.timing-pure-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.timing-pure-divider {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.6), transparent);
+  margin: 0 8px;
+}
+.timing-pure-icon {
+  font-size: 13px;
+  color: var(--gold-deep);
+  margin-bottom: 2px;
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8));
+}
+.timing-pure-lbl {
+  font-family: var(--font-display);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--ink-muted);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+.timing-pure-time {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 900;
+  color: #120a04;
+  margin-top: 1px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+/* Venue Arch Showcase (NO WHITE BOX) */
+.venue-arch-showcase {
+  width: 100%;
+  padding: 2px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.v-tag {
+  font-family: var(--font-display);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 1px;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+.v-name {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 800;
+  color: #120c06;
+  line-height: 1.25;
+  margin-bottom: 1px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+.v-addr {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-deep);
+  margin-bottom: 1px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+.v-note {
+  font-size: 10px;
+  max-width: 210px;
+  line-height: 1.3;
+  color: #2c1a0c;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+/* ============================================================ */
+/* CARD 5: BLESSINGS & COMPLIMENTS (HANDMADE GOLD DECKLED CARD) */
+/* ============================================================ */
+.card-blessings {
+  background-image: url('assets/card_bg.jpg');
+  min-height: 660px;
+}
+
+.card-blessings-content {
+  position: relative;
+  z-index: 10;
+  max-width: 250px;
+  margin: 0 auto;
+  padding: 188px 20px 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.quran-arch-showcase {
+  width: 100%;
+  margin-bottom: 7px;
+}
+.quran-ar {
+  font-family: var(--font-arabic);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #120a04;
+  line-height: 1.85;
+  direction: rtl;
+  margin-bottom: 3px;
+}
+.quran-ref {
+  font-family: var(--font-display);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold-deep);
+  display: block;
+  margin-bottom: 3px;
+}
+.quran-translation {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  color: #2c1a0c;
+  line-height: 1.45;
+  max-width: 225px;
+  margin: 0 auto;
+}
+
+.blessings-note {
+  font-size: 11.5px;
+  color: #2c1a0c;
+  font-weight: 600;
+  line-height: 1.45;
+  max-width: 225px;
+  margin: 0 auto 8px;
+}
+
+.family-signature-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.sig-tag {
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold-deep);
+  margin-bottom: 3px;
+}
+.sig-hosts {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--royal-maroon);
+  letter-spacing: 1px;
+  line-height: 1.35;
+}
+.sig-clan {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.return-top-btn {
+  background: rgba(255, 250, 240, 0.8);
+  border: 1px dashed rgba(197, 159, 78, 0.7);
+  color: var(--ink-secondary);
+  padding: 7px 18px;
+  border-radius: 25px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+}
+.return-top-btn:hover {
+  border-color: var(--gold-rich);
+  color: var(--gold-deep);
+  transform: translateY(-2px);
+}
+
+/* ============================================================ */
+/* CINEMATIC TEXT SCROLL REVEAL (BUTTER-SMOOTH & ZERO GLITCH)   */
+/* ============================================================ */
+.reveal-text {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.12s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.24s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.38s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.50s;
+}
+
+.reveal-text.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-text {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================================ */
+/* MOBILE RESPONSIVENESS (FLUID 320PX TO 480PX)                 */
+/* ============================================================ */
+@media (max-width: 480px) {
+  .envelope-wrapper {
+    width: 92vw;
+    height: 88vh;
+    max-height: 720px;
+    border-radius: 18px;
+  }
+  .invitation-suite {
+    padding: 12px 6px 40px;
+  }
+  .card-hero {
+    min-height: 780px;
+    background-color: #1a0f07;
+  }
+  .card-hero-content {
+    padding: 265px 10px 24px;
+    max-width: 290px;
+  }
+  .card-mehndi-content {
+    padding: 214px 6px 20px;
+    max-width: 220px;
+  }
+  .card-barat-content {
+    padding: 312px 8px 28px;
+    max-width: 230px;
+  }
+  .card-walima-content {
+    padding: 212px 8px 25px;
+    max-width: 230px;
+  }
+  .card-blessings-content {
+    padding: 185px 12px 65px;
+    max-width: 240px;
+  }
+  
+  .groom-name {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+  .hosts-name {
+    font-size: 19px;
+  }
+  .ceremony-title {
+    font-size: 23px;
+  }
+  .hero-num {
+    font-size: 42px;
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+.vercel
+*.original.jpg
+.DS_Store
+Thumbs.db

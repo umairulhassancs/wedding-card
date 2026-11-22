@@ -19,8 +19,11 @@ An exquisite, interactive digital wedding invitation crafted for the wedding cel
 ## ✨ Features
 
 - **3D Royal Envelope Unfolding**: Physical flap opening animation with golden Bismillah medallion and royal glow.
+- **Background Music Autoplay**: Plays *Teri Ore* automatically at balanced volume upon opening the envelope (no manual button needed).
+- **Dynamic Ceremony Filtering**: Send tailored invites (e.g. Walima only, Barat + Walima, or All Events) with automatic date and countdown sync.
+- **Built-in Link Generator (`generator.html`)**: Simple mobile-friendly tool to select ceremonies, optionally add guest names, and generate WhatsApp share links in 1 tap.
 - **Continuous Scroll Flow**: Smooth, unified transition across all invitation cards.
-- **Dynamic Live Countdown Timer**: Real-time days, hours, minutes, and seconds countdown to 11th December 2026.
+- **Dynamic Live Countdown Timer**: Real-time countdown automatically targeting the earliest invited ceremony.
 - **Harmonious Scroll Reveal**: High-performance `IntersectionObserver` cascading animations for event cards.
 - **Luxury Gold & Crimson Aesthetic**: Premium typography (Playfair Display, Cormorant Garamond, Montserrat, Great Vibes) and royal palace visuals.
 - **Responsive Design**: Pixel-perfect presentation across all mobile devices, tablets, and desktop displays.

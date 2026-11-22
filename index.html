@@ -24,14 +24,9 @@
 
   <!-- Floating Audio Engine -->
   <audio id="bg-music" loop preload="auto">
-    <source src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" type="audio/mp3">
+    <source src="assets/bg_music.mp3" type="audio/mpeg">
   </audio>
   <canvas id="sparkle-canvas"></canvas>
-
-  <button id="music-btn" class="music-fab" aria-label="Toggle Music">
-    <div class="wave-bars"><span></span><span></span><span></span></div>
-    <i class="fa-solid fa-music"></i>
-  </button>
 
   <!-- ============================================================ -->
   <!-- 3D ROYAL EMBOSSED ENVELOPE OPENING STAGE                     -->
@@ -234,6 +229,12 @@
             <p class="hosts-request">cordially invite you to celebrate the wedding ceremony of their beloved sons</p>
           </div>
 
+          <!-- Personalized Guest Welcome Banner (Shown if guest parameter exists) -->
+          <div id="guest-pill" class="guest-pill reveal-text" style="display: none;">
+            <span class="guest-pill-tag">Specially Invited</span>
+            <span class="guest-pill-name" id="guest-pill-name"></span>
+          </div>
+
           <!-- Grooms Calligraphy: Stylish, Elegant & 100% Readable (NO BOX) -->
           <div class="grooms-spotlight-pure reveal-text reveal-delay-2">
             <div class="groom-row">
@@ -255,7 +256,7 @@
 
           <div class="celebration-dates-pill reveal-text reveal-delay-3">
             <i class="fa-regular fa-calendar-check"></i>
-            <span>11TH — 13TH DECEMBER 2026</span>
+            <span id="hero-dates-label">11TH — 13TH DECEMBER 2026</span>
           </div>
 
           <!-- Sleek Frosted Countdown Bar -->
@@ -278,17 +279,17 @@
       </section>
 
       <!-- Royal Flourish Connector -->
-      <div class="card-connector">
+      <div class="card-connector" id="conn-hero">
         <span class="conn-line"></span>
         <i class="fa-solid fa-crown conn-icon"></i>
         <span class="conn-line"></span>
       </div>
 
       <!-- ================= CARD 2: MEHNDI CEREMONY (EMERALD & GOLD BESPOKE ARTWORK) ================= -->
-      <section class="royal-card card-mehndi">
+      <section class="royal-card card-mehndi" id="card-mehndi">
         <div class="card-mehndi-content">
           <div class="reveal-text">
-            <div class="ceremony-badge">CEREMONY I</div>
+            <div class="ceremony-badge" id="badge-mehndi">CEREMONY I</div>
             <h2 class="ceremony-title">Mehndi Ceremony</h2>
             <p class="ceremony-desc">An evening of celebration, traditional music, and joyful henna</p>
           </div>
@@ -341,17 +342,17 @@
       </section>
 
       <!-- Royal Flourish Connector -->
-      <div class="card-connector">
+      <div class="card-connector" id="conn-mehndi">
         <span class="conn-line"></span>
         <i class="fa-solid fa-crown conn-icon"></i>
         <span class="conn-line"></span>
       </div>
 
       <!-- ================= CARD 3: THE BARAT (CRIMSON VELVET & GOLD BESPOKE ARTWORK) ================= -->
-      <section class="royal-card card-barat">
+      <section class="royal-card card-barat" id="card-barat">
         <div class="card-barat-content">
           <div class="reveal-text">
-            <div class="ceremony-badge">CEREMONY II</div>
+            <div class="ceremony-badge" id="badge-barat">CEREMONY II</div>
             <h2 class="ceremony-title">The Barat</h2>
             <p class="ceremony-desc">The auspicious wedding procession and nuptial union</p>
           </div>
@@ -404,17 +405,17 @@
       </section>
 
       <!-- Royal Flourish Connector -->
-      <div class="card-connector">
+      <div class="card-connector" id="conn-barat">
         <span class="conn-line"></span>
         <i class="fa-solid fa-crown conn-icon"></i>
         <span class="conn-line"></span>
       </div>
 
       <!-- ================= CARD 4: WALIMA RECEPTION (CHAMPAGNE GOLD & CHANDELIER) ================= -->
-      <section class="royal-card card-walima">
+      <section class="royal-card card-walima" id="card-walima">
         <div class="card-walima-content">
           <div class="reveal-text">
-            <div class="ceremony-badge">CEREMONY III</div>
+            <div class="ceremony-badge" id="badge-walima">CEREMONY III</div>
             <h2 class="ceremony-title">Walima Reception</h2>
             <p class="ceremony-desc">The grand wedding banquet honoring the newly wedded couples</p>
           </div>
@@ -467,14 +468,14 @@
       </section>
 
       <!-- Royal Flourish Connector -->
-      <div class="card-connector">
+      <div class="card-connector" id="conn-walima">
         <span class="conn-line"></span>
         <i class="fa-solid fa-crown conn-icon"></i>
         <span class="conn-line"></span>
       </div>
 
       <!-- ================= CARD 5: BLESSINGS & COMPLIMENTS (HANDMADE GOLD DECKLED CARD) ================= -->
-      <section class="royal-card card-blessings">
+      <section class="royal-card card-blessings" id="card-blessings">
         <div class="card-blessings-content">
           <!-- Quranic Inscription directly on deckled parchment -->
           <div class="quran-arch-showcase reveal-text">

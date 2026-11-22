@@ -1,12 +1,10 @@
 /* =================================================================
    ROYAL LUXURY DIGITAL WEDDING INVITATION – ENGLISH SCRIPT ENGINE
    Instant Smooth Native Scrolling · 3D Envelope Physics · 60FPS
+   Dynamic Ceremony Filtering · Auto Countdown · Personalized Guests
    ================================================================= */
 
-let isMusicActive = false;
-let audioContextInstance = null;
-let ambientSynthInterval = null;
-
+// DOM Elements
 const envelopeStage = document.getElementById('envelope-stage');
 const envelopeWrapper = document.getElementById('envelope');
 const flapTop = document.getElementById('flap-top');
@@ -17,126 +15,155 @@ const waxSealBtn = document.getElementById('wax-seal-btn');
 const sealRadiance = document.getElementById('seal-radiance');
 const lightRays = document.getElementById('light-rays');
 const volumetricGlow = document.getElementById('volumetric-glow');
-
-const musicBtn = document.getElementById('music-btn');
 const bgMusic = document.getElementById('bg-music');
 
 // ============================================================
-// 1. SOUND & AUDIO SYNTHESIZER ENGINE
+// 1. DYNAMIC CEREMONY FILTERING & GUEST PERSONALIZATION
 // ============================================================
-function getAudioContext() {
-  if (audioContextInstance) return audioContextInstance;
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (AudioContextClass) {
-    audioContextInstance = new AudioContextClass();
-  }
-  return audioContextInstance;
+const urlParams = new URLSearchParams(window.location.search);
+const eventsRaw = (urlParams.get('events') || urlParams.get('event') || urlParams.get('e') || 'all').toLowerCase();
+const guestParam = (urlParams.get('guest') || urlParams.get('to') || urlParams.get('name') || '').trim();
+
+// Determine ceremonies to display
+const isAll = eventsRaw === 'all' || eventsRaw === '' || eventsRaw === '1';
+let showMehndi = isAll || eventsRaw.includes('mehndi') || eventsRaw === 'm';
+let showBarat  = isAll || eventsRaw.includes('barat')  || eventsRaw === 'b';
+let showWalima = isAll || eventsRaw.includes('walima') || eventsRaw === 'w';
+
+// Edge case: if parameter didn't match any, default to all
+if (!showMehndi && !showBarat && !showWalima) {
+  showMehndi = true;
+  showBarat = true;
+  showWalima = true;
 }
 
-function playCelebrationChimes() {
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    if (ctx.state === 'suspended') ctx.resume();
-
-    const chimePitches = [523.25, 659.25, 783.99, 987.77, 1046.50];
-    chimePitches.forEach((freq, idx) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.1);
-
-      gain.gain.setValueAtTime(0, ctx.currentTime + idx * 0.1);
-      gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + idx * 0.1 + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + idx * 0.1 + 1.6);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(ctx.currentTime + idx * 0.1);
-      osc.stop(ctx.currentTime + idx * 0.1 + 1.7);
-    });
-  } catch (err) {
-    console.warn('Audio chime notice:', err);
-  }
+// Personalized Guest Welcome Pill
+const guestPill = document.getElementById('guest-pill');
+const guestPillName = document.getElementById('guest-pill-name');
+if (guestParam && guestPill && guestPillName) {
+  guestPillName.textContent = guestParam;
+  guestPill.style.display = 'inline-flex';
 }
 
-function startAmbientSynth() {
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    if (ctx.state === 'suspended') ctx.resume();
+// Ceremony DOM References
+const cardMehndi = document.getElementById('card-mehndi');
+const cardBarat  = document.getElementById('card-barat');
+const cardWalima = document.getElementById('card-walima');
 
-    const weddingScale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33];
-    let noteCounter = 0;
+const connHero   = document.getElementById('conn-hero');
+const connMehndi = document.getElementById('conn-mehndi');
+const connBarat  = document.getElementById('conn-barat');
+const connWalima = document.getElementById('conn-walima');
 
-    function soundTone(frequency) {
-      if (!isMusicActive || !ctx) return;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
+// Set visibility
+if (cardMehndi) cardMehndi.style.display = showMehndi ? '' : 'none';
+if (cardBarat)  cardBarat.style.display  = showBarat  ? '' : 'none';
+if (cardWalima) cardWalima.style.display = showWalima ? '' : 'none';
 
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(frequency, ctx.currentTime);
-
-      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 0.35);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 2.2);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start();
-      osc.stop(ctx.currentTime + 2.3);
-    }
-
-    soundTone(weddingScale[0]);
-    ambientSynthInterval = setInterval(() => {
-      if (!isMusicActive) return;
-      soundTone(weddingScale[noteCounter % weddingScale.length]);
-      noteCounter++;
-    }, 2000);
-  } catch (err) {
-    console.warn('Synth notice:', err);
-  }
-}
-
-function startMusic() {
-  isMusicActive = true;
-  musicBtn.classList.add('playing');
-  bgMusic.play().catch(() => {
-    startAmbientSynth();
-  });
-}
-
-function stopMusic() {
-  isMusicActive = false;
-  musicBtn.classList.remove('playing');
-  bgMusic.pause();
-  if (ambientSynthInterval) {
-    clearInterval(ambientSynthInterval);
-    ambientSynthInterval = null;
-  }
-}
-
-musicBtn.addEventListener('click', () => {
-  isMusicActive ? stopMusic() : startMusic();
+// Seamless connector flow
+// Hide all connectors first
+[connHero, connMehndi, connBarat, connWalima].forEach(conn => {
+  if (conn) conn.style.display = 'none';
 });
 
+// Build list of active cards: [Hero, ...ceremonies, Blessings]
+const activeCards = ['hero'];
+if (showMehndi) activeCards.push('mehndi');
+if (showBarat)  activeCards.push('barat');
+if (showWalima) activeCards.push('walima');
+activeCards.push('blessings');
+
+// Turn on the appropriate connector between each adjacent pair
+for (let i = 0; i < activeCards.length - 1; i++) {
+  const from = activeCards[i];
+  if (from === 'hero' && connHero) connHero.style.display = 'flex';
+  if (from === 'mehndi' && connMehndi) connMehndi.style.display = 'flex';
+  if (from === 'barat' && connBarat) connBarat.style.display = 'flex';
+  if (from === 'walima' && connWalima) connWalima.style.display = 'flex';
+}
+
+// Dynamic Ceremony Badges (Bespoke Numbering)
+const visibleCeremonies = [];
+if (showMehndi) visibleCeremonies.push({ id: 'badge-mehndi', name: 'Mehndi' });
+if (showBarat)  visibleCeremonies.push({ id: 'badge-barat', name: 'Barat' });
+if (showWalima) visibleCeremonies.push({ id: 'badge-walima', name: 'Walima' });
+
+if (visibleCeremonies.length === 1) {
+  const el = document.getElementById(visibleCeremonies[0].id);
+  if (el) el.textContent = 'CORDIAL INVITATION';
+} else if (visibleCeremonies.length === 2) {
+  const el1 = document.getElementById(visibleCeremonies[0].id);
+  const el2 = document.getElementById(visibleCeremonies[1].id);
+  if (el1) el1.textContent = 'CEREMONY I';
+  if (el2) el2.textContent = 'CEREMONY II';
+} else if (visibleCeremonies.length === 3) {
+  const el1 = document.getElementById('badge-mehndi');
+  const el2 = document.getElementById('badge-barat');
+  const el3 = document.getElementById('badge-walima');
+  if (el1) el1.textContent = 'CEREMONY I';
+  if (el2) el2.textContent = 'CEREMONY II';
+  if (el3) el3.textContent = 'CEREMONY III';
+}
+
+// Dynamic Hero Date Range
+const heroDatesLabel = document.getElementById('hero-dates-label');
+if (heroDatesLabel) {
+  if (showMehndi && showBarat && showWalima) {
+    heroDatesLabel.textContent = '11TH — 13TH DECEMBER 2026';
+  } else if (showBarat && showWalima && !showMehndi) {
+    heroDatesLabel.textContent = '12TH — 13TH DECEMBER 2026';
+  } else if (showMehndi && showWalima && !showBarat) {
+    heroDatesLabel.textContent = '11TH & 13TH DECEMBER 2026';
+  } else if (showMehndi && showBarat && !showWalima) {
+    heroDatesLabel.textContent = '11TH & 12TH DECEMBER 2026';
+  } else if (showWalima && !showMehndi && !showBarat) {
+    heroDatesLabel.textContent = '13TH DECEMBER 2026';
+  } else if (showBarat && !showMehndi && !showWalima) {
+    heroDatesLabel.textContent = '12TH DECEMBER 2026';
+  } else if (showMehndi && !showBarat && !showWalima) {
+    heroDatesLabel.textContent = '11TH DECEMBER 2026';
+  }
+}
+
 // ============================================================
-// 2. 3D ENVELOPE OPENING ANIMATION (Grand Theatre Reveal)
+// 2. AUDIO AUTOPLAY ENGINE (Teri Ore - Balanced Volume)
+// ============================================================
+function playBackgroundMusic() {
+  if (!bgMusic) return;
+  bgMusic.volume = 0.50; // Normal, pleasant, balanced background volume
+  bgMusic.playbackRate = 1.0; // Normal tempo
+
+  const playPromise = bgMusic.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      // Browser autoplay restriction fallback: play on first subsequent user tap
+      const onUserTouch = () => {
+        bgMusic.play().catch(() => {});
+        window.removeEventListener('click', onUserTouch);
+        window.removeEventListener('touchstart', onUserTouch);
+      };
+      window.addEventListener('click', onUserTouch, { once: true });
+      window.addEventListener('touchstart', onUserTouch, { once: true });
+    });
+  }
+}
+
+// ============================================================
+// 3. 3D ENVELOPE OPENING ANIMATION (Grand Theatre Reveal)
 // ============================================================
 let isEnvelopeOpened = false;
-waxSealBtn.addEventListener('click', triggerEnvelopeOpening);
+if (waxSealBtn) {
+  waxSealBtn.addEventListener('click', triggerEnvelopeOpening);
+}
 
 function triggerEnvelopeOpening() {
   if (isEnvelopeOpened) return;
   isEnvelopeOpened = true;
 
-  playCelebrationChimes();
-  envelopeWrapper.classList.add('illuminated');
+  // Immediately start high-fidelity music on user tap
+  playBackgroundMusic();
 
-  // Immediately ensure envelope never traps gestures
+  envelopeWrapper.classList.add('illuminated');
   envelopeStage.style.pointerEvents = 'none';
 
   // Royal Gold Confetti Shower
@@ -182,7 +209,7 @@ function triggerEnvelopeOpening() {
     ease: 'power2.out'
   }, 0.2);
 
-  // Phase 3: True 3D Physical Flap Unfolding (Clearly Visible)
+  // Phase 3: True 3D Physical Flap Unfolding
   tl.to(flapTop, { rotateX: 180, duration: 1.3, ease: 'power2.inOut' }, 0.35);
   tl.to(flapBottom, { rotateX: -140, duration: 1.2, ease: 'power2.inOut' }, 0.55);
   tl.to(flapLeft, { rotateY: -150, duration: 1.2, ease: 'power2.inOut' }, 0.65);
@@ -207,16 +234,18 @@ function triggerEnvelopeOpening() {
     }
   }, 2.3);
 
-  // Start revealing Card 1 text as envelope fades
   tl.call(revealHeroCard, null, 1.8);
-
-  startMusic();
 }
 
 // ============================================================
-// 3. COUNTDOWN TIMER ENGINE (11TH DEC 2026 19:00 PKT)
+// 4. DYNAMIC COUNTDOWN TIMER (Auto-Targets Earliest Ceremony)
 // ============================================================
-const targetWeddingDate = new Date('December 11, 2026 19:00:00').getTime();
+let targetWeddingDate = new Date('December 11, 2026 19:00:00').getTime();
+if (!showMehndi && showBarat) {
+  targetWeddingDate = new Date('December 12, 2026 13:00:00').getTime();
+} else if (!showMehndi && !showBarat && showWalima) {
+  targetWeddingDate = new Date('December 13, 2026 14:00:00').getTime();
+}
 
 const cdDays = document.getElementById('cd-days');
 const cdHours = document.getElementById('cd-hours');
@@ -250,7 +279,7 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 // ============================================================
-// 4. FLOATING GOLDEN SPARKLES CANVAS ENGINE (Ultra-Lightweight 60FPS)
+// 5. FLOATING GOLDEN SPARKLES CANVAS ENGINE (Ultra-Lightweight 60FPS)
 // ============================================================
 const sparkleCanvas = document.getElementById('sparkle-canvas');
 if (sparkleCanvas) {
@@ -309,7 +338,7 @@ if (sparkleCanvas) {
 }
 
 // ============================================================
-// 5. CINEMATIC LUXURY TEXT SCROLL REVEAL (Zero Glitch / Native IO)
+// 6. CINEMATIC LUXURY TEXT SCROLL REVEAL (Zero Glitch / Native IO)
 // ============================================================
 function revealHeroCard() {
   const heroElements = document.querySelectorAll('.card-hero .reveal-text');
@@ -321,7 +350,13 @@ function revealHeroCard() {
 }
 
 function initScrollReveal() {
-  const scrollCards = document.querySelectorAll('.card-mehndi, .card-barat, .card-walima, .card-blessings');
+  // Only observe cards that are currently visible
+  const visibleCards = [];
+  if (showMehndi && cardMehndi) visibleCards.push(cardMehndi);
+  if (showBarat  && cardBarat)  visibleCards.push(cardBarat);
+  if (showWalima && cardWalima) visibleCards.push(cardWalima);
+  const cardBlessings = document.getElementById('card-blessings');
+  if (cardBlessings) visibleCards.push(cardBlessings);
 
   if (!('IntersectionObserver' in window)) {
     document.querySelectorAll('.reveal-text').forEach(el => el.classList.add('is-revealed'));
@@ -330,7 +365,7 @@ function initScrollReveal() {
 
   const observerOptions = {
     root: null,
-    rootMargin: '0px 0px -10% 0px', // Triggers as the card scrolls into view
+    rootMargin: '0px 0px -10% 0px',
     threshold: 0.05
   };
 
@@ -341,12 +376,12 @@ function initScrollReveal() {
         items.forEach(el => {
           el.classList.add('is-revealed');
         });
-        obs.unobserve(entry.target); // Reveal once smoothly, no re-triggering or jitter
+        obs.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  scrollCards.forEach(card => cardObserver.observe(card));
+  visibleCards.forEach(card => cardObserver.observe(card));
 }
 
 // Initialize on DOM load

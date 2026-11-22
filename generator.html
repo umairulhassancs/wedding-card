@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Invitation Link Generator — Royal Wedding Suite</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-cream: #FBF8F2;
+      --card-bg: #FFFFFF;
+      --gold-primary: #D4AF37;
+      --gold-dark: #99751D;
+      --crimson: #781926;
+      --crimson-dark: #500f19;
+      --text-dark: #1E1A16;
+      --text-muted: #665D53;
+      --border-gold: rgba(212, 175, 55, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg-cream);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+    }
+
+    .generator-card {
+      width: 100%;
+      max-width: 540px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      border: 1.5px solid var(--border-gold);
+      box-shadow: 0 12px 40px rgba(120, 25, 38, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+      padding: 28px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .generator-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #D4AF37, #781926, #D4AF37);
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .crest-icon {
+      font-size: 26px;
+      color: var(--gold-primary);
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    .suite-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--crimson);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .suite-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .grooms-names {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--gold-dark);
+    }
+
+    .divider-gold {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .divider-gold span {
+      height: 1px;
+      width: 60px;
+      background: var(--border-gold);
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--crimson);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Fast Preset Chips */
+    .presets-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .preset-chip {
+      background: #F5EFE6;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preset-chip:hover, .preset-chip.active {
+      background: var(--crimson);
+      color: #FFFFFF;
+      border-color: var(--crimson);
+      box-shadow: 0 4px 12px rgba(120, 25, 38, 0.2);
+    }
+
+    /* Checkboxes list */
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .event-toggle {
+      display: flex;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1.5px solid #EAE3D2;
+      border-radius: 12px;
+      background: #FAFAF7;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .event-toggle.checked {
+      border-color: var(--gold-primary);
+      background: #FFFDF9;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.15);
+    }
+
+    .event-toggle input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--crimson);
+      margin-right: 14px;
+      cursor: pointer;
+    }
+
+    .event-info {
+      flex: 1;
+    }
+
+    .event-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .event-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .event-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: #F0EAE1;
+      color: var(--gold-dark);
+    }
+
+    /* Guest Input */
+    .input-group {
+      margin-bottom: 22px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #EAE3D2;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      color: var(--text-dark);
+      background: #FAFAF7;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-field:focus {
+      border-color: var(--gold-primary);
+      background: #FFFFFF;
+    }
+
+    /* Link Preview Box */
+    .link-preview-box {
+      background: #F6F3EC;
+      border: 1px dashed var(--gold-primary);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 22px;
+      word-break: break-all;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      max-height: 70px;
+      overflow-y: auto;
+    }
+
+    .link-preview-box strong {
+      color: var(--crimson);
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 10.5px;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+
+    /* Action Buttons */
+    .actions-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #FFFFFF;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-whatsapp:hover {
+      background: #20bd5a;
+      transform: translateY(-1px);
+    }
+
+    .btn-copy {
+      background: var(--crimson);
+      color: #FFFFFF;
+      box-shadow: 0 4px 15px rgba(120, 25, 38, 0.25);
+    }
+
+    .btn-copy:hover {
+      background: var(--crimson-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-preview {
+      background: #FFFFFF;
+      color: var(--crimson);
+      border: 1.5px solid var(--crimson);
+    }
+
+    .btn-preview:hover {
+      background: #FDF9F5;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      background: #1E1A16;
+      color: #FFFFFF;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast i {
+      color: #25D366;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="generator-card">
+    <div class="header-section">
+      <i class="fa-solid fa-crown crest-icon"></i>
+      <div class="suite-subtitle">Royal Wedding Suite</div>
+      <h1 class="suite-title">Invitation Link Generator</h1>
+      <p class="grooms-names">Samiullah Khan & Rehmatullah Khan Baloch</p>
+    </div>
+
+    <div class="divider-gold">
+      <span></span>
+      <i class="fa-solid fa-gem" style="color: var(--gold-primary); font-size: 11px;"></i>
+      <span></span>
+    </div>
+
+    <!-- Quick Presets -->
+    <div class="section-label">
+      <i class="fa-solid fa-bolt"></i> 1-Tap Quick Presets
+    </div>
+    <div class="presets-row">
+      <button type="button" class="preset-chip active" onclick="applyPreset('all')">👑 All Events (Full)</button>
+      <button type="button" class="preset-chip" onclick="applyPreset('walima')">🍽️ Walima Only</button>
+      <button type="button" class="preset-chip" onclick="applyPreset('barat_walima')">🐴 Barat + Walima</button>
+      <button type="button" class="preset-chip" onclick="applyPreset('mehndi_walima')">🌿 Mehndi + Walima</button>
+    </div>
+
+    <!-- Ceremonies Selection -->
+    <div class="section-label">
+      <i class="fa-solid fa-calendar-days"></i> Select Ceremonies for Guest
+    </div>
+    <div class="events-list">
+      <label class="event-toggle checked" id="lbl-mehndi">
+        <input type="checkbox" id="chk-mehndi" checked onchange="onCheckboxChange()">
+        <div class="event-info">
+          <div class="event-name">Mehndi Ceremony</div>
+          <div class="event-sub">Friday 11 Dec 2026 • 7:00 PM • Ancestral Residence</div>
+        </div>
+        <span class="event-badge">Day 1</span>
+      </label>
+
+      <label class="event-toggle checked" id="lbl-barat">
+        <input type="checkbox" id="chk-barat" checked onchange="onCheckboxChange()">
+        <div class="event-info">
+          <div class="event-name">The Barat</div>
+          <div class="event-sub">Saturday 12 Dec 2026 • 1:00 PM • Milan Marriage Hall</div>
+        </div>
+        <span class="event-badge">Day 2</span>
+      </label>
+
+      <label class="event-toggle checked" id="lbl-walima">
+        <input type="checkbox" id="chk-walima" checked onchange="onCheckboxChange()">
+        <div class="event-info">
+          <div class="event-name">Walima Reception</div>
+          <div class="event-sub">Sunday 13 Dec 2026 • 2:00 PM • Al-Rehman Marquee</div>
+        </div>
+        <span class="event-badge">Day 3</span>
+      </label>
+    </div>
+
+    <!-- Optional Guest Name -->
+    <div class="section-label">
+      <i class="fa-solid fa-user-tag"></i> Guest / Family Name (Optional)
+    </div>
+    <div class="input-group">
+      <input type="text" id="guest-name" class="input-field" placeholder="e.g. Chaudhry Rashid & Family" oninput="updateLink()">
+    </div>
+
+    <!-- Live Generated Link -->
+    <div class="link-preview-box">
+      <strong>Generated Invitation Link:</strong>
+      <span id="link-display">Generating link...</span>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions-grid">
+      <button type="button" class="btn btn-whatsapp" onclick="shareOnWhatsApp()">
+        <i class="fa-brands fa-whatsapp" style="font-size: 19px;"></i> Share on WhatsApp
+      </button>
+      <button type="button" class="btn btn-copy" onclick="copyInvitationLink()">
+        <i class="fa-regular fa-copy"></i> Copy Invitation Link
+      </button>
+      <a id="btn-preview-link" href="#" target="_blank" class="btn btn-preview">
+        <i class="fa-regular fa-eye"></i> Preview Invitation
+      </a>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-text">Link copied to clipboard!</span>
+  </div>
+
+  <script>
+    const baseUrl = window.location.origin + window.location.pathname.replace(/generator\.html$/, '') + 'index.html';
+
+    function getSelectedEvents() {
+      const m = document.getElementById('chk-mehndi').checked;
+      const b = document.getElementById('chk-barat').checked;
+      const w = document.getElementById('chk-walima').checked;
+
+      // Update styling
+      document.getElementById('lbl-mehndi').classList.toggle('checked', m);
+      document.getElementById('lbl-barat').classList.toggle('checked', b);
+      document.getElementById('lbl-walima').classList.toggle('checked', w);
+
+      if (m && b && w) return 'all';
+      const evts = [];
+      if (m) evts.push('mehndi');
+      if (b) evts.push('barat');
+      if (w) evts.push('walima');
+      return evts.length > 0 ? evts.join(',') : 'all';
+    }
+
+    function buildUrl() {
+      const events = getSelectedEvents();
+      const guest = document.getElementById('guest-name').value.trim();
+
+      const params = new URLSearchParams();
+      if (events !== 'all') {
+        params.set('events', events);
+      }
+      if (guest) {
+        params.set('guest', guest);
+      }
+
+      const queryString = params.toString();
+      return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+    }
+
+    function updateLink() {
+      const finalUrl = buildUrl();
+      document.getElementById('link-display').textContent = finalUrl;
+      document.getElementById('btn-preview-link').href = finalUrl;
+    }
+
+    function onCheckboxChange() {
+      // Clear active presets
+      document.querySelectorAll('.preset-chip').forEach(el => el.classList.remove('active'));
+      updateLink();
+    }
+
+    function applyPreset(preset) {
+      document.querySelectorAll('.preset-chip').forEach(el => el.classList.remove('active'));
+      const eventTarget = window.event ? window.event.target : null;
+      if (eventTarget) eventTarget.classList.add('active');
+
+      const chkM = document.getElementById('chk-mehndi');
+      const chkB = document.getElementById('chk-barat');
+      const chkW = document.getElementById('chk-walima');
+
+      if (preset === 'all') {
+        chkM.checked = true; chkB.checked = true; chkW.checked = true;
+      } else if (preset === 'walima') {
+        chkM.checked = false; chkB.checked = false; chkW.checked = true;
+      } else if (preset === 'barat_walima') {
+        chkM.checked = false; chkB.checked = true; chkW.checked = true;
+      } else if (preset === 'mehndi_walima') {
+        chkM.checked = true; chkB.checked = false; chkW.checked = true;
+      }
+
+      updateLink();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-text').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2600);
+    }
+
+    function copyInvitationLink() {
+      const url = buildUrl();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('Invitation link copied successfully!');
+        }).catch(() => fallbackCopy(url));
+      } else {
+        fallbackCopy(url);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast('Invitation link copied successfully!');
+      } catch (err) {
+        alert('Please copy link manually: ' + text);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function shareOnWhatsApp() {
+      const url = buildUrl();
+      const guest = document.getElementById('guest-name').value.trim();
+      
+      let greeting = "Bismillah-ir-Rahman-ir-Rahim ⚜️\n\n";
+      if (guest) {
+        greeting += `*Dear ${guest},*\n\n`;
+      }
+      greeting += "*Mr. & Mrs. Jahangir Khan Baloch* cordially invite you to celebrate the royal wedding ceremony of their beloved sons:\n\n";
+      greeting += "✨ *Samiullah Khan Baloch* & *Rehmatullah Khan Baloch* ✨\n\n";
+      greeting += "Please tap the link below to open your royal digital invitation card:\n";
+      greeting += `${url}\n\n`;
+      greeting += "We look forward to your gracious presence and prayers! 💐";
+
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(greeting)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    // Initialize on load
+    updateLink();
+  </script>
+</body>
+</html>
